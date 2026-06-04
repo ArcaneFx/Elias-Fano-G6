@@ -1,6 +1,0 @@
-# Ejecutable y artefactos de compilacion
-main
-*.o
-*.out
-# Salida del benchmark
-metricas_resultados.csv
