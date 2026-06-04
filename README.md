@@ -1,10 +1,10 @@
 # INFO145: Diseño y Análisis de Algoritmos
-## [cite_start]Proyecto Semestral: Técnicas de Representación y Compresión en Arreglos Ordenados [cite: 1, 5]
+## Proyecto Semestral: Técnicas de Representación y Compresión en Arreglos Ordenados 
 
-[cite_start]**Grupo 6: Codificación Elias-Fano** [cite: 131]
+**Grupo 6: Codificación Elias-Fano** 
 
 ### 👥 Integrantes:
-* [cite_start]Benjamín Parra [cite: 4]
+* Benjamín Parra
 * Jason Cárdenas
 * Hans Benicke
 
@@ -16,7 +16,7 @@ Este repositorio contiene la implementación y el marco de experimentación para
 
 
 
-### [cite_start]Instrucciones de Compilación 
+### Instrucciones de Compilación 
 - Estando dentro de la carpeta ELIAS-FANO-G6 se debe ejecutar el comando 'make' para compilar.
 - Se debe ejecutar el comando './main --benchmark' para que se cree el archivo 'metricas_resultados.csv'.
 - Que hace el comando?
