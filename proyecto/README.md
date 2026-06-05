@@ -1,70 +1,33 @@
-# INFO145 — Proyecto Semestral: Técnicas de Representación y Compresión en Arreglos Ordenados
+# 📊 Proyecto Semestral: Representación y Compresión en Arreglos Ordenados
 
-Algoritmo de compresión asignado al grupo: **Elias-Fano** (Caso 3).
+## 👥 Grupo 6 — Algoritmo Asignado: Elias-Fano
+* **Benjamín Parra**
+* **Jason Cárdenas**
+* **Hans Benicke**
 
-El programa implementa y compara tres representaciones de un arreglo ordenado:
+---
 
-- **Caso 1 — Representación explícita** (`Caso1.hpp`): arreglo de enteros + búsqueda binaria. Línea base.
-- **Caso 2 — Gap-Coding** (`Caso2.hpp`): diferencias entre elementos consecutivos + índice de muestreo (*sample*) para acotar el rango de búsqueda.
-- **Caso 3 — Elias-Fano** (`Caso3.hpp`): codificación cuasi-sucinta sobre los **valores** del arreglo. La parte baja (k bits) se empaqueta de forma contigua y la parte alta se codifica en **unario**. Usa el *sample* del Caso 2 para acotar `[L, R]`.
+## 🎯 ¿De qué trata este proyecto?
+El objetivo del programa es crear una lista gigante de números ordenados y comparar tres formas distintas de guardarla en la computadora para ver cuál ahorra más memoria y cuál busca más rápido:
 
-## Compilación
+1. **Caso 1 (Línea Base):** Guarda los números normales (sin comprimir) y busca usando la clásica búsqueda binaria.
+2. **Caso 2 (Gap-Coding):** Guarda solamente las diferencias (restas) entre un número y el anterior para gastar menos espacio. Usa una pequeña guía de muestras (*Sample*) para saber por dónde buscar.
+3. **Caso 3 (Elias-Fano):** Nuestro algoritmo especial. Separa los números en bits "bajos" (que empaqueta de forma ultra apretada) y bits "altos" (en código unario). ¡Ahorra muchísima memoria!
 
-```bash
-make
-```
+---
 
-Compila con `g++ -O3 -Wall -std=c++17` y genera el ejecutable `main`. Para limpiar:
+## 🛠️ Compilación y Ejecución (Cómo usar el programa)
 
-```bash
-make clean
-```
+1. **Compilar:** Se tiene que escribir `make` mientras se está parado en la carpeta del proyecto. Esto creará el archivo ejecutable llamado `main`.
+2. **Ejecutar:** Se debe ingresar el comando `./main --benchmark`. 
 
-## Modos de ejecución
+### 🖥️ ¿Qué verás en la terminal al ejecutarlo?
+Mientras el programa corre, verás texto en tiempo real indicando el avance del experimento paso a paso:
+* El mensaje de inicio: `Iniciando modo Benchmark Automatizado...`.
+* El progreso de los tamaños procesados (1, 10 y 100 millones de datos).
+* La distribución actual en evaluación (Lineal o Normal) junto con un código de verificación (`checksum`).
+* El mensaje final de éxito: `[OK] Resultados consolidados en 'metricas_resultados.csv'.`
 
-### 1. Benchmark automático
+### 📊 ¿Dónde quedan los resultados?
+Al finalizar, todos los tiempos de construcción (en milisegundos), tiempos de búsqueda (en microsegundos), el espacio en bytes y los bits netos por elemento quedarán guardados de forma automática en el archivo **`metricas_resultados.csv`** dentro de la misma carpeta. 
 
-```bash
-./main --benchmark
-```
-
-Genera los arreglos (distribución **lineal** y **normal** con distintas desviaciones estándar), construye las tres estructuras y mide, para cada caso y tamaño:
-
-- tiempo de construcción (ms),
-- tiempo de búsqueda promedio en µs (sobre `10000` búsquedas, no una sola),
-- espacio utilizado (bytes) y bits por elemento.
-
-**Salida:** archivo `metricas_resultados.csv` con las columnas:
-
-```
-Distribucion,Parametro,Tamano,Caso,TiempoConstruccion_ms,TiempoBusqueda_us,Espacio_bytes,BitsPorElemento
-```
-
-Estos datos son la base de los gráficos del Hito 2.
-
-> Las escalas (`10^6, 10^7, 10^8`), el `epsilon` de la distribución lineal, las `sigmas` de la normal y el salto del *sample* (`salto_b`) están parametrizados al inicio de `ejecutarBenchmark()` en `main.cpp`. La escala `10^8` usa varios GB de RAM; coméntela si su equipo no la soporta.
-
-### 2. Modo archivo (interactivo)
-
-```bash
-./main -i ruta/del/archivo.csv
-```
-
-Lee un archivo `.csv` con enteros (separados por comas y/o saltos de línea), ordena los datos y construye las tres estructuras. Luego, de forma interactiva, el usuario elige **en qué estructura** buscar (`1` = explícito, `2` = Gap-Coding, `3` = Elias-Fano) y el valor a buscar. El programa indica si se encontró, en qué posición y el tiempo de búsqueda. Se ingresa `-1` como estructura para salir.
-
-## Tipo y rango de datos
-
-El programa trabaja con **`int32_t`** (enteros de 32 bits). Los valores deben ser **no negativos** (rango `0` … `2147483647`), ya que Gap-Coding y Elias-Fano asumen un arreglo ordenado ascendente de valores `>= 0`. La lectura de enteros se hace con `std::stol` (equivalente a `atol`).
-
-## Nota sobre Elias-Fano
-
-La parte baja se empaqueta **a nivel de bits** (exactamente `k = floor(log2(n))` bits por elemento) sobre palabras `uint64_t`, y la parte alta se almacena en un bitvector unario. El acceso aleatorio al i-ésimo valor usa `select_1` sobre la parte alta, acelerado con un muestreo. Gracias a esto, el espacio por elemento (~`k + 2` bits) es estrictamente menor que los 32 bits de la representación explícita.
-
-## Verificación de memoria
-
-El código no presenta fugas de memoria. Puede verificarse con:
-
-```bash
-make
-printf "3\n12345\n-1\n" | valgrind --leak-check=full ./main -i ruta/archivo.csv
-```
