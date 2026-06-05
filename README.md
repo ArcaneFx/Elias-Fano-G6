@@ -1,29 +1,33 @@
-# INFO145: Diseño y Análisis de Algoritmos
-## Proyecto Semestral: Técnicas de Representación y Compresión en Arreglos Ordenados 
+# 📊 Proyecto Semestral: Representación y Compresión en Arreglos Ordenados
 
-**Grupo 6: Codificación Elias-Fano** 
-
-### 👥 Integrantes:
-* Benjamín Parra
-* Jason Cárdenas
-* Hans Benicke
+## 👥 Grupo 6 — Algoritmo Asignado: Elias-Fano
+* **Benjamín Parra**
+* **Jason Cárdenas**
+* **Hans Benicke**
 
 ---
 
-Este repositorio contiene la implementación y el marco de experimentación para evaluar el trade-off de espacio-tiempo al representar arreglos ordenados de gran magnitud utilizando tres enfoques distintos: Representación Explícita (Línea Base), Gap-Coding (con Índices de Muestreo) y Compresión Cuasi-Sucinta mediante Codificación Elias-Fano
+## 🎯 ¿De qué trata este proyecto?
+El objetivo del programa es crear una lista gigante de números ordenados y comparar tres formas distintas de guardarla en la computadora para ver cuál ahorra más memoria y cuál busca más rápido:
+
+1. **Caso 1 (Línea Base):** Guarda los números normales (sin comprimir) y busca usando la clásica búsqueda binaria.
+2. **Caso 2 (Gap-Coding):** Guarda solamente las diferencias (restas) entre un número y el anterior para gastar menos espacio. Usa una pequeña guía de muestras (*Sample*) para saber por dónde buscar.
+3. **Caso 3 (Elias-Fano):** Nuestro algoritmo especial. Separa los números en bits "bajos" (que empaqueta de forma ultra apretada) y bits "altos" (en código unario). ¡Ahorra muchísima memoria!
 
 ---
 
+## 🛠️ Compilación y Ejecución (Cómo usar el programa)
 
+1. **Compilar:** Se tiene que escribir `make` mientras se está parado en la carpeta del proyecto. Esto creará el archivo ejecutable llamado `main`.
+2. **Ejecutar:** Se debe ingresar el comando `./main --benchmark`. 
 
-### Instrucciones de Compilación 
-- Estando dentro de la carpeta ELIAS-FANO-G6 se debe ejecutar el comando 'make' para compilar.
-- Se debe ejecutar el comando './main --benchmark' para que se cree el archivo 'metricas_resultados.csv'.
-- Que hace el comando?
-    * Genera los datos: Crea arreglos gigantes de 1, 10 y 100 millones de enteros aleatorios ordenados.
-    * Construye las estructuras: Procesa los datos en memoria para la Línea Base (Caso 1), Gap-Coding con muestreo (Caso 2) y la compresión por división de bits de Elias-Fano (Caso 3).
-    * Mide el rendimiento: Realiza 10,000 búsquedas automáticas en cada caso para registrar promedios exactos de tiempo y el espacio utilizado.
-    * Exporta los resultados: Guarda de forma automática todas las métricas de construcción y búsqueda en el archivo '.csv' final.
--Para poder ver los datos generados se debe ocupar el comando 'cat metricas_resultados.csv'
+### 🖥️ ¿Qué verás en la terminal al ejecutarlo?
+Mientras el programa corre, verás texto en tiempo real indicando el avance del experimento paso a paso:
+* El mensaje de inicio: `Iniciando modo Benchmark Automatizado...`.
+* El progreso de los tamaños procesados (1, 10 y 100 millones de datos).
+* La distribución actual en evaluación (Lineal o Normal) junto con un código de verificación (`checksum`).
+* El mensaje final de éxito: `[OK] Resultados consolidados en 'metricas_resultados.csv'.`
 
+### 📊 ¿Dónde quedan los resultados?
+Al finalizar, todos los tiempos de construcción (en milisegundos), tiempos de búsqueda (en microsegundos), el espacio en bytes y los bits netos por elemento quedarán guardados de forma automática en el archivo **`metricas_resultados.csv`** dentro de la misma carpeta. 
 

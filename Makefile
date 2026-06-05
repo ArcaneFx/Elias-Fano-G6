@@ -6,7 +6,7 @@ SOURCES = main.cpp
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCES)
+$(TARGET): $(SOURCES) Caso1.hpp Caso2.hpp Caso3.hpp
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(TARGET)
 
 clean:
